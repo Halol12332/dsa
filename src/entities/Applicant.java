@@ -9,5 +9,5 @@ package entities;
  * @author user
  */
 public class Applicant {
-    //hello world
+    //hello worldss
 }
