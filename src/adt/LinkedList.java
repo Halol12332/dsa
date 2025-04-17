@@ -5,7 +5,7 @@
 package adt;
 
 /**
- *
+ *hahaha
  * @author user
  */
 public class LinkedList {
