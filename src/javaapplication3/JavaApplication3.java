@@ -1,38 +1,74 @@
 package javaapplication3;
 
-import adt.LinkedList;
-import control.MatchingEngineController;
+import boundary.ApplicantManagementUI;
+import boundary.InterviewSchedulingUI;
+import boundary.JobManagementUI;
 import boundary.MatchingEngineUI;
+import control.ApplicantManagementController;
+import control.InterviewSchedulingController;
+import control.JobManagementController;
+import control.MatchingEngineController;
+import adt.LinkedList;
 import entities.Applicant;
-import entities.Company;
 import entities.JobPosting;
-import entities.Match;
+import entities.Company;
 import utility.FileUtil;
 
+import java.util.Scanner;
+
 public class JavaApplication3 {
-
     public static void main(String[] args) {
-        System.out.println("Current working directory: " + System.getProperty("user.dir"));
-
-
         // Load data from files
         LinkedList<Applicant> applicants = FileUtil.loadApplicantsFromFile("applicants.txt");
         LinkedList<Company> companies = FileUtil.loadCompaniesFromFile("companies.txt");
         LinkedList<JobPosting> jobPostings = FileUtil.loadJobPostingsFromFile("jobPostings.txt", companies);
 
-        // Perform matching
-        MatchingEngineController matchingEngine = new MatchingEngineController(applicants, jobPostings);
-        matchingEngine.performMatching();
+        // Initialize controllers
+        //ApplicantManagementController applicantManagementController = new ApplicantManagementController(applicants);
+        //JobManagementController jobManagementController = new JobManagementController(jobPostings);
+        MatchingEngineController matchingEngineController = new MatchingEngineController(applicants, jobPostings);
+        //InterviewSchedulingController interviewSchedulingController = new InterviewSchedulingController();
 
-        // Save matches to file
-        LinkedList<Match> matches = matchingEngine.getMatches();
-        FileUtil.saveMatchesToFile(matches, "matches.txt");
+        // Initialize UIs
+        //ApplicantManagementUI applicantManagementUI = new ApplicantManagementUI(applicantManagementController);
+        //JobManagementUI jobManagementUI = new JobManagementUI(jobManagementController);
+        MatchingEngineUI matchingEngineUI = new MatchingEngineUI(matchingEngineController);
+        //InterviewSchedulingUI interviewSchedulingUI = new InterviewSchedulingUI(interviewSchedulingController);
 
-        // Load matches from file
-        LinkedList<Match> loadedMatches = FileUtil.loadMatchesFromFile("matches.txt", applicants, jobPostings);
+        // Main menu
+        Scanner scanner = new Scanner(System.in);
+        boolean done = false;
+        while (!done) {
+            System.out.println("\nMain Menu:");
+            System.out.println("1. Applicant Management");
+            System.out.println("2. Job Management");
+            System.out.println("3. Matching Engine");
+            System.out.println("4. Interview Scheduling");
+            System.out.println("5. Exit");
+            System.out.print("Enter your choice: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
 
-        // Display matches
-        MatchingEngineUI ui = new MatchingEngineUI(matchingEngine);
-        ui.displayMatches();
+            switch (choice) {
+                case 1:
+                    //applicantManagementUI.displayMenu();
+                    break;
+                case 2:
+                    //jobManagementUI.displayMenu();
+                    break;
+                case 3:
+                    matchingEngineUI.displayMenu();
+                    break;
+                case 4:
+                    //interviewSchedulingUI.displayMenu();
+                    break;
+                case 5:
+                    done = true;
+                    System.out.println("Exiting the application...");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
     }
 }

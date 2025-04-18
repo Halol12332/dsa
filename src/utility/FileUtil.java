@@ -102,7 +102,7 @@ public class FileUtil {
             while ((line = reader.readLine()) != null) {
                 String[] fields = line.split(",");
                 Company company = findCompanyById(companies, fields[1]);
-                jobPostings.add(new JobPosting(fields[0], company, fields[2], fields[3], fields[4], fields[5], Double.parseDouble(fields[6])));
+                jobPostings.add(new JobPosting(fields[0], company, fields[2], fields[3], fields[4], fields[5], fields[6], Double.parseDouble(fields[7])));
             }
         } catch (IOException e) {
             e.printStackTrace();

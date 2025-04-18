@@ -16,19 +16,36 @@ public class MatchingEngineController {
     private LinkedList<JobPosting> jobPostings;
     private LinkedList<Match> matches;
 
-    public MatchingEngineController(LinkedList<Applicant> applicants, LinkedList<JobPosting> jobPostings) {
+    public MatchingEngineController(LinkedList<Applicant> applicants, 
+            LinkedList<JobPosting> jobPostings) {
         this.applicants = applicants;
         this.jobPostings = jobPostings;
         this.matches = new LinkedList<>();
     }
 
-    public void performMatching() {
+    public void performMatching(String applicantName) {
+        // Clear previous matches
+        matches.clear();
+
+        // Find the applicant by name
+        Applicant targetApplicant = null;
         for (Applicant applicant : applicants) {
-            for (JobPosting job : jobPostings) {
-                double matchScore = calculateMatchScore(applicant, job);
-                if (matchScore > 0) {
-                    matches.add(new Match(applicant, job, matchScore));
-                }
+            if (applicant.getName().equalsIgnoreCase(applicantName)) {
+                targetApplicant = applicant;
+                break;
+            }
+        }
+
+        if (targetApplicant == null) {
+            System.out.println("Applicant not found: " + applicantName);
+            return;
+        }
+
+        // Perform matching for the target applicant
+        for (JobPosting job : jobPostings) {
+            double matchScore = calculateMatchScore(targetApplicant, job);
+            if (matchScore > 0) {
+                matches.add(new Match(targetApplicant, job, matchScore));
             }
         }
     }
@@ -53,6 +70,17 @@ public class MatchingEngineController {
 
         // Additional criteria can be added here
         return score;
+    }
+    
+    public LinkedList<Match> filterMatches(String location, String jobType) {
+        LinkedList<Match> filteredMatches = new LinkedList<>();
+        for (Match match : matches) {
+            if ((location == null || match.getJobPosting().getLocation().equalsIgnoreCase(location)) &&
+                (jobType == null || match.getJobPosting().getJobType().equalsIgnoreCase(jobType))) {
+                filteredMatches.add(match);
+            }
+        }
+        return filteredMatches;
     }
 
     public LinkedList<Match> getMatches() {

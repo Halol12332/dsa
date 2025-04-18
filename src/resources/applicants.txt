@@ -1,2 +1,4 @@
 1,John Doe,john@example.com,1234567890,Computer Science,Java,New York
 2,Jane Smith,jane@example.com,0987654321,Electrical Engineering,C++,San Francisco
+3,Bren Will,will@example.com,0983633323,Business Management,Excel,Johor
+4,Goh Lee,lee@example.com,0987622144,Data Science,Python,Kuala Lumpur

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package entities;
 
 /**
@@ -12,16 +8,18 @@ public class JobPosting {
     private Company company;
     private String title;
     private String description;
+    private String jobType; // Added jobType field
     private String requiredSkills;
     private String location;
     private double salary;
 
-    // Constructor
-    public JobPosting(String id, Company company, String title, String description, String requiredSkills, String location, double salary) {
+    // Updated Constructor to include jobType
+    public JobPosting(String id, Company company, String title, String description, String jobType, String requiredSkills, String location, double salary) {
         this.id = id;
         this.company = company;
         this.title = title;
         this.description = description;
+        this.jobType = jobType; // Initialize jobType
         this.requiredSkills = requiredSkills;
         this.location = location;
         this.salary = salary;
@@ -60,6 +58,15 @@ public class JobPosting {
         this.description = description;
     }
 
+    // Added getter and setter for jobType
+    public String getJobType() {
+        return jobType;
+    }
+
+    public void setJobType(String jobType) {
+        this.jobType = jobType;
+    }
+
     public String getRequiredSkills() {
         return requiredSkills;
     }
@@ -82,5 +89,19 @@ public class JobPosting {
 
     public void setSalary(double salary) {
         this.salary = salary;
+    }
+
+    @Override
+    public String toString() {
+        return "JobPosting{" +
+                "id='" + id + '\'' +
+                ", company=" + company +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", jobType='" + jobType + '\'' + // Included jobType in toString
+                ", requiredSkills='" + requiredSkills + '\'' +
+                ", location='" + location + '\'' +
+                ", salary=" + salary +
+                '}';
     }
 }

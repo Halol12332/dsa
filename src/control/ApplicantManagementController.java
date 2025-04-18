@@ -4,10 +4,17 @@
  */
 package control;
 
+import adt.LinkedList;
+import entities.Applicant;
+
 /**
  *
  * @author natali
  */
 public class ApplicantManagementController {
+
+    public ApplicantManagementController(LinkedList<Applicant> applicants) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
 }
