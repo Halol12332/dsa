@@ -1,15 +1,8 @@
 package adt;
 
-//THIS IS FROM SAMPLE CODE.
+import java.util.Iterator;
 
-/**
- * LinkedList.java A class that implements the ADT List using a chain of nodes,
- * with the node implemented as an inner class.
- * 
- * @author Frank M. Carrano
- * @version 2.0
- */
-public class LinkedList<T> implements ListInterface<T> {
+public class LinkedList<T> implements ListInterface<T>, Iterable<T> {
 
     private Node firstNode; // reference to first node
     private int numberOfEntries;  	// number of entries in list
@@ -33,7 +26,7 @@ public class LinkedList<T> implements ListInterface<T> {
         } else {                        // add to end of nonempty list
             Node currentNode = firstNode;	// traverse linked list with p pointing to the current node
             while (currentNode.next != null) { // while have not reached the last node
-            currentNode = currentNode.next;
+                currentNode = currentNode.next;
             }
             currentNode.next = newNode; // make last node reference new node
         }
@@ -57,10 +50,11 @@ public class LinkedList<T> implements ListInterface<T> {
                 for (int i = 1; i < newPosition - 1; ++i) {
                     nodeBefore = nodeBefore.next;		// advance nodeBefore to its next node
                 }
+
                 newNode.next = nodeBefore.next;	// make new node point to current node at newPosition
                 nodeBefore.next = newNode;		// make the node before point to the new node
             }
-                numberOfEntries++;
+            numberOfEntries++;
         } else {
             isSuccessful = false;
         }
@@ -94,7 +88,7 @@ public class LinkedList<T> implements ListInterface<T> {
         if ((givenPosition >= 1) && (givenPosition <= numberOfEntries)) {
             Node currentNode = firstNode;
             for (int i = 0; i < givenPosition - 1; ++i) {
-              currentNode = currentNode.next;		// advance currentNode to next node
+                currentNode = currentNode.next;		// advance currentNode to next node
             }
             currentNode.data = newEntry;	// currentNode is pointing to the node at givenPosition
         } else {
@@ -102,40 +96,15 @@ public class LinkedList<T> implements ListInterface<T> {
         }
         return isSuccessful;
     }
-  
-    public int indexOf(T entry) {
-        int index = 1;
-        Node currentNode = firstNode;
-        while (currentNode != null) {
-            if (currentNode.data.equals(entry)) {
-                return index;
-            }
-            currentNode = currentNode.next;
-            index++;
-        }
-        return -1; // Entry not found
-    }
 
-    public void reverse() {
-        Node previousNode = null;
-        Node currentNode = firstNode;
-        while (currentNode != null) {
-            Node nextNode = currentNode.next;
-            currentNode.next = previousNode;
-            previousNode = currentNode;
-            currentNode = nextNode;
-        }
-        firstNode = previousNode;
-    }
-
-  @Override
+    @Override
     public T getEntry(int givenPosition) {
         T result = null;
 
         if ((givenPosition >= 1) && (givenPosition <= numberOfEntries)) {
             Node currentNode = firstNode;
             for (int i = 0; i < givenPosition - 1; ++i) {
-              currentNode = currentNode.next;		// advance currentNode to next node
+                currentNode = currentNode.next;		// advance currentNode to next node
             }
             result = currentNode.data;	// currentNode is pointing to the node at givenPosition
         }
@@ -163,7 +132,7 @@ public class LinkedList<T> implements ListInterface<T> {
     }
 
     @Override
-      public boolean isEmpty() {
+    public boolean isEmpty() {
         boolean result;
         result = numberOfEntries == 0;
         return result;
@@ -171,7 +140,7 @@ public class LinkedList<T> implements ListInterface<T> {
 
     @Override
     public boolean isFull() {
-      return false;
+        return false;
     }
 
     @Override
@@ -183,6 +152,34 @@ public class LinkedList<T> implements ListInterface<T> {
             currentNode = currentNode.next;
         }
         return outputStr;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new LinkedListIterator();
+    }
+
+    private class LinkedListIterator implements Iterator<T> {
+        private Node nextNode;
+
+        public LinkedListIterator() {
+            nextNode = firstNode;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return nextNode != null;
+        }
+
+        @Override
+        public T next() {
+            if (!hasNext()) {
+                //throw new NoSuchElementException();
+            }
+            T data = nextNode.data;
+            nextNode = nextNode.next;
+            return data;
+        }
     }
 
     private class Node {
@@ -197,18 +194,6 @@ public class LinkedList<T> implements ListInterface<T> {
         private Node(T data, Node next) {
             this.data = data;
             this.next = next;
-        }
-
-        @Override
-        public String toString() {
-            StringBuilder outputStr = new StringBuilder();
-            Node currentNode = firstNode;
-            while (currentNode != null) {
-                outputStr.append(currentNode.data).append(" -> ");
-                currentNode = currentNode.next;
-            }
-            outputStr.append("null");
-            return outputStr.toString();
         }
     }
 }
