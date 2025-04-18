@@ -16,7 +16,8 @@ public class Applicant {
     private String locationPreference;
 
     // Constructor
-    public Applicant(String id, String name, String email, String phoneNumber, String major, String skills, String locationPreference) {
+    public Applicant(String id, String name, String email, String phoneNumber, String major, 
+    String skills, String locationPreference) {
         this.id = id;
         this.name = name;
         this.email = email;

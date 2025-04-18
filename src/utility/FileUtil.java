@@ -10,9 +10,11 @@ import java.io.*;
 import java.util.StringJoiner;
 
 public class FileUtil {
+    
+    private static final String BASE_PATH = "src/resources/";
 
-    public static void saveApplicantsToFile(LinkedList<Applicant> applicants, String filePath) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+    public static void saveApplicantsToFile(LinkedList<Applicant> applicants, String fileName) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(BASE_PATH + fileName))) {
             for (Applicant applicant : applicants) {
                 StringJoiner sj = new StringJoiner(",");
                 sj.add(applicant.getId());
@@ -30,9 +32,9 @@ public class FileUtil {
         }
     }
 
-    public static LinkedList<Applicant> loadApplicantsFromFile(String filePath) {
+    public static LinkedList<Applicant> loadApplicantsFromFile(String fileName) {
         LinkedList<Applicant> applicants = new LinkedList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(BASE_PATH + fileName))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] fields = line.split(",");
@@ -44,8 +46,8 @@ public class FileUtil {
         return applicants;
     }
 
-    public static void saveCompaniesToFile(LinkedList<Company> companies, String filePath) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+    public static void saveCompaniesToFile(LinkedList<Company> companies, String fileName) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(BASE_PATH + fileName))) {
             for (Company company : companies) {
                 StringJoiner sj = new StringJoiner(",");
                 sj.add(company.getId());
@@ -60,9 +62,9 @@ public class FileUtil {
         }
     }
 
-    public static LinkedList<Company> loadCompaniesFromFile(String filePath) {
+    public static LinkedList<Company> loadCompaniesFromFile(String fileName) {
         LinkedList<Company> companies = new LinkedList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(BASE_PATH + fileName))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] fields = line.split(",");
@@ -74,8 +76,8 @@ public class FileUtil {
         return companies;
     }
 
-    public static void saveJobPostingsToFile(LinkedList<JobPosting> jobPostings, String filePath) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+    public static void saveJobPostingsToFile(LinkedList<JobPosting> jobPostings, String fileName) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(BASE_PATH + fileName))) {
             for (JobPosting jobPosting : jobPostings) {
                 StringJoiner sj = new StringJoiner(",");
                 sj.add(jobPosting.getId());
@@ -93,9 +95,9 @@ public class FileUtil {
         }
     }
 
-    public static LinkedList<JobPosting> loadJobPostingsFromFile(String filePath, LinkedList<Company> companies) {
+    public static LinkedList<JobPosting> loadJobPostingsFromFile(String fileName, LinkedList<Company> companies) {
         LinkedList<JobPosting> jobPostings = new LinkedList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(BASE_PATH + fileName))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] fields = line.split(",");
@@ -117,8 +119,8 @@ public class FileUtil {
         return null;
     }
 
-    public static void saveMatchesToFile(LinkedList<Match> matches, String filePath) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+    public static void saveMatchesToFile(LinkedList<Match> matches, String fileName) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(BASE_PATH + fileName))) {
             for (Match match : matches) {
                 StringJoiner sj = new StringJoiner(",");
                 sj.add(match.getApplicant().getId());
@@ -132,9 +134,9 @@ public class FileUtil {
         }
     }
 
-    public static LinkedList<Match> loadMatchesFromFile(String filePath, LinkedList<Applicant> applicants, LinkedList<JobPosting> jobPostings) {
+    public static LinkedList<Match> loadMatchesFromFile(String fileName, LinkedList<Applicant> applicants, LinkedList<JobPosting> jobPostings) {
         LinkedList<Match> matches = new LinkedList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(BASE_PATH + fileName))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] fields = line.split(",");

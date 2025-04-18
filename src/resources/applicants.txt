@@ -1,2 +1,2 @@
-1,John Doe,john@example.com,1234567890,Computer Science,Java,Python,New York
-2,Jane Smith,jane@example.com,0987654321,Electrical Engineering,C++,MATLAB,San Francisco
+1,John Doe,john@example.com,1234567890,Computer Science,Java,New York
+2,Jane Smith,jane@example.com,0987654321,Electrical Engineering,C++,San Francisco
