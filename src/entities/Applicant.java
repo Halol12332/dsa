@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package entities;
+import adt.LinkedList;
 /**
  * Represents an applicant in the Internship Application Program.
  */
@@ -12,12 +13,13 @@ public class Applicant {
     private String email;
     private String phoneNumber;
     private String major;
-    private String skills;
+    private LinkedList<String> skills;
     private String locationPreference;
 
     // Constructor
-    public Applicant(String id, String name, String email, String phoneNumber, String major, 
-    String skills, String locationPreference) {
+    public Applicant(String id, String name, String email, 
+            String phoneNumber, String major, 
+            LinkedList<String> skills, String locationPreference) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -68,11 +70,11 @@ public class Applicant {
         this.major = major;
     }
 
-    public String getSkills() {
+    public LinkedList<String> getSkills() {
         return skills;
     }
 
-    public void setSkills(String skills) {
+    public void setSkills(LinkedList<String> skills) {
         this.skills = skills;
     }
 

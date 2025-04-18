@@ -17,13 +17,21 @@ public class FileUtil {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(BASE_PATH + fileName))) {
             for (Applicant applicant : applicants) {
                 StringJoiner sj = new StringJoiner(",");
+
+                // Join skills into a single string (semicolon-separated)
+                StringJoiner skillsJoiner = new StringJoiner(";");
+                for (String skill : applicant.getSkills()) {
+                    skillsJoiner.add(skill);
+                }
+
                 sj.add(applicant.getId());
                 sj.add(applicant.getName());
                 sj.add(applicant.getEmail());
                 sj.add(applicant.getPhoneNumber());
                 sj.add(applicant.getMajor());
-                sj.add(applicant.getSkills());
+                sj.add(skillsJoiner.toString()); // ✅ convert LinkedList<String> to String
                 sj.add(applicant.getLocationPreference());
+
                 writer.write(sj.toString());
                 writer.newLine();
             }
@@ -32,19 +40,37 @@ public class FileUtil {
         }
     }
 
+
     public static LinkedList<Applicant> loadApplicantsFromFile(String fileName) {
-        LinkedList<Applicant> applicants = new LinkedList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(BASE_PATH + fileName))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] fields = line.split(",");
-                applicants.add(new Applicant(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6]));
+    LinkedList<Applicant> applicants = new LinkedList<>();
+    try (BufferedReader reader = new BufferedReader(new FileReader(BASE_PATH + fileName))) {
+        String line;
+        while ((line = reader.readLine()) != null) {
+            String[] fields = line.split(",");
+            
+            adt.LinkedList<String> skills = new adt.LinkedList<>();
+            String[] skillArray = fields[5].split(";");
+
+            for (int i = 0; i < skillArray.length; i++) {
+                skills.add(skillArray[i]);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+
+            applicants.add(new Applicant(
+                fields[0],                // id
+                fields[1],                // name
+                fields[2],                // email
+                fields[3],                // phone number
+                fields[4],                // major
+                skills,                   // LinkedList<String>
+                fields[6]                 // location preference
+            ));
         }
-        return applicants;
+    } catch (IOException e) {
+        e.printStackTrace();
     }
+    return applicants;
+}
+
 
     public static void saveCompaniesToFile(LinkedList<Company> companies, String fileName) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(BASE_PATH + fileName))) {

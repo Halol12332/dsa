@@ -10,18 +10,18 @@ package entities;
 public class Interview {
     private String id;
     private Applicant applicant;
-    private Company company;
-    private String date;
-    private String time;
+    private JobPosting jobPosting;
+    private String dateTime;
     private String location;
 
     // Constructor
-    public Interview(String id, Applicant applicant, Company company, String date, String time, String location) {
+    public Interview(String id, Applicant applicant, 
+            JobPosting jobPosting, String dateTime,
+            String location) {
         this.id = id;
         this.applicant = applicant;
-        this.company = company;
-        this.date = date;
-        this.time = time;
+        this.jobPosting = jobPosting;
+        this.dateTime = dateTime;
         this.location = location;
     }
 
@@ -29,7 +29,6 @@ public class Interview {
     public String getId() {
         return id;
     }
-
     public void setId(String id) {
         this.id = id;
     }
@@ -37,33 +36,23 @@ public class Interview {
     public Applicant getApplicant() {
         return applicant;
     }
-
     public void setApplicant(Applicant applicant) {
         this.applicant = applicant;
     }
 
-    public Company getCompany() {
-        return company;
+    public JobPosting getJobPosting() {
+        return jobPosting;
+    }
+    public void setJobPosting(JobPosting jobPosting) {
+        this.jobPosting = jobPosting;
     }
 
-    public void setCompany(Company company) {
-        this.company = company;
+    public String getDateTime() {
+        return dateTime;
     }
 
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
+    public void setDate(String dateTime) {
+        this.dateTime = dateTime;
     }
 
     public String getLocation() {
