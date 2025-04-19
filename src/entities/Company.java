@@ -52,4 +52,13 @@ public class Company {
     public void setLocation(String location) {
         this.location = location;
     }
+    @Override
+    public String toString() {
+        return "Company{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", industry='" + industry + '\'' +
+                ", location='" + location + '\'' +
+                '}';
+    }
 }

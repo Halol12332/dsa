@@ -62,4 +62,14 @@ public class Interview {
     public void setLocation(String location) {
         this.location = location;
     }
+    @Override
+    public String toString() {
+        return "Interview{" +
+                "id='" + id + '\'' +
+                ", applicant=" + applicant.getName() +
+                ", jobPosting=" + jobPosting.getTitle() +
+                ", dateTime='" + dateTime + '\'' +
+                ", location='" + location + '\'' +
+                '}';
+    }
 }

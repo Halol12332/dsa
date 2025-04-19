@@ -98,7 +98,7 @@ public class JobPosting {
                 ", company=" + company +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
-                ", jobType='" + jobType + '\'' + // Included jobType in toString
+                ", jobType='" + jobType + '\'' +
                 ", requiredSkills='" + requiredSkills + '\'' +
                 ", location='" + location + '\'' +
                 ", salary=" + salary +

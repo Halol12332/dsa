@@ -26,7 +26,7 @@ public class JavaApplication3 {
         JobPosting jobPosting = new JobPosting("J001", company, "Software Engineer Intern", 
                                                "Develop and test new software applications.", 
                                                "Internship", "Java, Python", "San Francisco", 50000.0);
-
+        
         // Create an Applicant
         LinkedList<String> skills = new LinkedList<>();
         skills.add("Java");
@@ -42,22 +42,23 @@ public class JavaApplication3 {
                                             "2025-05-20 10:00 AM", "Tech Innovations Office");
 
         // Initialize controllers
-        ApplicantManagementController applicantManagementController = new ApplicantManagementController();
-        JobManagementController jobManagementController = new JobManagementController();
+        //ApplicantManagementController applicantManagementController = new ApplicantManagementController();
+        //JobManagementController jobManagementController = new JobManagementController();
         MatchingEngineController matchingEngineController = new MatchingEngineController();
-        InterviewSchedulingController interviewSchedulingController = new InterviewSchedulingController();
+        //InterviewSchedulingController interviewSchedulingController = new InterviewSchedulingController();
 
         // Initialize UIs
-        ApplicantManagementUI applicantManagementUI = new ApplicantManagementUI(applicantManagementController);
-        JobManagementUI jobManagementUI = new JobManagementUI(jobManagementController);
+        //ApplicantManagementUI applicantManagementUI = new ApplicantManagementUI(applicantManagementController);
+        //JobManagementUI jobManagementUI = new JobManagementUI(jobManagementController);
         MatchingEngineUI matchingEngineUI = new MatchingEngineUI(matchingEngineController);
-        InterviewSchedulingUI interviewSchedulingUI = new InterviewSchedulingUI(interviewSchedulingController);
+        //InterviewSchedulingUI interviewSchedulingUI = new InterviewSchedulingUI(interviewSchedulingController);
 
         
         // Main menu
         Scanner scanner = new Scanner(System.in);
         boolean done = false;
         while (!done) {
+            System.out.println(jobPosting.toString());
             System.out.println("\nMain Menu:");
             System.out.println("1. Applicant Management");
             System.out.println("2. Job Management");
@@ -70,16 +71,16 @@ public class JavaApplication3 {
 
             switch (choice) {
                 case 1:
-                    applicantManagementUI.displayMenu();
+                    //applicantManagementUI.displayMenu();
                     break;
                 case 2:
-                    jobManagementUI.displayMenu();
+                    //jobManagementUI.displayMenu();
                     break;
                 case 3:
                     matchingEngineUI.displayMenu();
                     break;
                 case 4:
-                    interviewSchedulingUI.displayMenu();
+                    //interviewSchedulingUI.displayMenu();
                     break;
                 case 5:
                     done = true;

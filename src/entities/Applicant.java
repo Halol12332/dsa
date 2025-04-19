@@ -85,4 +85,17 @@ public class Applicant {
     public void setLocationPreference(String locationPreference) {
         this.locationPreference = locationPreference;
     }
+    
+    @Override
+    public String toString() {
+        return "Applicant{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", major='" + major + '\'' +
+                ", skills=" + skills +
+                ", locationPreference='" + locationPreference + '\'' +
+                '}';
+    }
 }
