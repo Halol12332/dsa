@@ -18,21 +18,16 @@ import java.util.Scanner;
 
 public class JavaApplication3 {
     public static void main(String[] args) {
-        // Load data from files
-        LinkedList<Applicant> applicants = FileUtil.loadApplicantsFromFile("applicants.txt");
-        LinkedList<Company> companies = FileUtil.loadCompaniesFromFile("companies.txt");
-        LinkedList<JobPosting> jobPostings = FileUtil.loadJobPostingsFromFile("jobPostings.txt", companies);
-
         // Initialize controllers
         //ApplicantManagementController applicantManagementController = new ApplicantManagementController(applicants);
         //JobManagementController jobManagementController = new JobManagementController(jobPostings);
-        MatchingEngineController matchingEngineController = new MatchingEngineController(applicants, jobPostings);
+        //MatchingEngineController matchingEngineController = new MatchingEngineController(applicants, jobPostings);
         //InterviewSchedulingController interviewSchedulingController = new InterviewSchedulingController();
 
         // Initialize UIs
         //ApplicantManagementUI applicantManagementUI = new ApplicantManagementUI(applicantManagementController);
         //JobManagementUI jobManagementUI = new JobManagementUI(jobManagementController);
-        MatchingEngineUI matchingEngineUI = new MatchingEngineUI(matchingEngineController);
+       //MatchingEngineUI matchingEngineUI = new MatchingEngineUI(matchingEngineController);
         //InterviewSchedulingUI interviewSchedulingUI = new InterviewSchedulingUI(interviewSchedulingController);
 
         // Main menu
@@ -57,7 +52,7 @@ public class JavaApplication3 {
                     //jobManagementUI.displayMenu();
                     break;
                 case 3:
-                    matchingEngineUI.displayMenu();
+                    //matchingEngineUI.displayMenu();
                     break;
                 case 4:
                     //interviewSchedulingUI.displayMenu();

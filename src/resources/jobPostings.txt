@@ -1,3 +1,0 @@
-1,1,Software Engineer,Develop software solutions,Internship,Java,New York,70000
-2,2,Hardware Engineer,Design hardware components,Full Time,C++,San Francisco,80000
-3,3,Data Analyst,Analyze Beverage Sales,Part Time,Python,Kuala Lumpur, 1300

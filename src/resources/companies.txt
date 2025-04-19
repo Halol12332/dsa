@@ -1,2 +1,0 @@
-1,TechCorp,Technology,New York
-2,ElectroCorp,Electrical Engineering,San Francisco
