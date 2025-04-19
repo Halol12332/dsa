@@ -9,6 +9,10 @@ public class MatchingEngineController {
     private LinkedList<Applicant> applicants;
     private LinkedList<JobPosting> jobPostings;
     private LinkedList<Match> matches;
+    
+    public MatchingEngineController(){
+        
+    }
 
     public MatchingEngineController(LinkedList<Applicant> applicants, 
             LinkedList<JobPosting> jobPostings) {

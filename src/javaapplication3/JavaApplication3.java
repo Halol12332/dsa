@@ -12,26 +12,48 @@ import adt.LinkedList;
 import entities.Applicant;
 import entities.JobPosting;
 import entities.Company;
-import utility.FileUtil;
+import entities.Interview;
 
 import java.util.Scanner;
 
 public class JavaApplication3 {
     public static void main(String[] args) {
-        
-        
+        // Create entities
+        // Create a Company
+        Company company = new Company("C001", "Tech Innovations", "Technology", "San Francisco");
+
+        // Create a JobPosting
+        JobPosting jobPosting = new JobPosting("J001", company, "Software Engineer Intern", 
+                                               "Develop and test new software applications.", 
+                                               "Internship", "Java, Python", "San Francisco", 50000.0);
+
+        // Create an Applicant
+        LinkedList<String> skills = new LinkedList<>();
+        skills.add("Java");
+        skills.add("Python");
+        skills.add("SQL");
+
+        Applicant applicant = new Applicant("A001", "John Doe", "john.doe@example.com", 
+                                            "123-456-7890", "Computer Science", 
+                                            skills, "San Francisco");
+
+        // Create an Interview
+        Interview interview = new Interview("I001", applicant, jobPosting, 
+                                            "2025-05-20 10:00 AM", "Tech Innovations Office");
+
         // Initialize controllers
-        //ApplicantManagementController applicantManagementController = new ApplicantManagementController(applicants);
-        //JobManagementController jobManagementController = new JobManagementController(jobPostings);
-        //MatchingEngineController matchingEngineController = new MatchingEngineController(applicants, jobPostings);
-        //InterviewSchedulingController interviewSchedulingController = new InterviewSchedulingController();
+        ApplicantManagementController applicantManagementController = new ApplicantManagementController();
+        JobManagementController jobManagementController = new JobManagementController();
+        MatchingEngineController matchingEngineController = new MatchingEngineController();
+        InterviewSchedulingController interviewSchedulingController = new InterviewSchedulingController();
 
         // Initialize UIs
-        //ApplicantManagementUI applicantManagementUI = new ApplicantManagementUI(applicantManagementController);
-        //JobManagementUI jobManagementUI = new JobManagementUI(jobManagementController);
-       //MatchingEngineUI matchingEngineUI = new MatchingEngineUI(matchingEngineController);
-        //InterviewSchedulingUI interviewSchedulingUI = new InterviewSchedulingUI(interviewSchedulingController);
+        ApplicantManagementUI applicantManagementUI = new ApplicantManagementUI(applicantManagementController);
+        JobManagementUI jobManagementUI = new JobManagementUI(jobManagementController);
+        MatchingEngineUI matchingEngineUI = new MatchingEngineUI(matchingEngineController);
+        InterviewSchedulingUI interviewSchedulingUI = new InterviewSchedulingUI(interviewSchedulingController);
 
+        
         // Main menu
         Scanner scanner = new Scanner(System.in);
         boolean done = false;
@@ -48,16 +70,16 @@ public class JavaApplication3 {
 
             switch (choice) {
                 case 1:
-                    //applicantManagementUI.displayMenu();
+                    applicantManagementUI.displayMenu();
                     break;
                 case 2:
-                    //jobManagementUI.displayMenu();
+                    jobManagementUI.displayMenu();
                     break;
                 case 3:
-                    //matchingEngineUI.displayMenu();
+                    matchingEngineUI.displayMenu();
                     break;
                 case 4:
-                    //interviewSchedulingUI.displayMenu();
+                    interviewSchedulingUI.displayMenu();
                     break;
                 case 5:
                     done = true;
