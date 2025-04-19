@@ -1,5 +1,6 @@
 package javaapplication3;
 
+import adt.LinkedList;
 import boundary.ApplicantManagementUI;
 import boundary.InterviewSchedulingUI;
 import boundary.JobManagementUI;
@@ -8,7 +9,6 @@ import control.ApplicantManagementController;
 import control.InterviewSchedulingController;
 import control.JobManagementController;
 import control.MatchingEngineController;
-import adt.LinkedList;
 import entities.Applicant;
 import entities.JobPosting;
 import entities.Company;
@@ -18,29 +18,6 @@ import java.util.Scanner;
 
 public class JavaApplication3 {
     public static void main(String[] args) {
-        // Create entities
-        // Create a Company
-        Company company = new Company("C001", "Tech Innovations", "Technology", "San Francisco");
-
-        // Create a JobPosting
-        JobPosting jobPosting = new JobPosting("J001", company, "Software Engineer Intern", 
-                                               "Develop and test new software applications.", 
-                                               "Internship", "Java, Python", "San Francisco", 50000.0);
-        
-        // Create an Applicant
-        LinkedList<String> skills = new LinkedList<>();
-        skills.add("Java");
-        skills.add("Python");
-        skills.add("SQL");
-
-        Applicant applicant = new Applicant("A001", "John Doe", "john.doe@example.com", 
-                                            "123-456-7890", "Computer Science", 
-                                            skills, "San Francisco");
-
-        // Create an Interview
-        Interview interview = new Interview("I001", applicant, jobPosting, 
-                                            "2025-05-20 10:00 AM", "Tech Innovations Office");
-
         // Initialize controllers
         //ApplicantManagementController applicantManagementController = new ApplicantManagementController();
         //JobManagementController jobManagementController = new JobManagementController();
@@ -58,7 +35,6 @@ public class JavaApplication3 {
         Scanner scanner = new Scanner(System.in);
         boolean done = false;
         while (!done) {
-            System.out.println(jobPosting.toString());
             System.out.println("\nMain Menu:");
             System.out.println("1. Applicant Management");
             System.out.println("2. Job Management");

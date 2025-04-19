@@ -35,7 +35,7 @@ public class MatchingEngineUI {
                     viewAllMatches();
                     break;
                 case 3:
-                    filterMatches();
+                    //filterMatches();
                     break;
                 case 4:
                     done = true;
@@ -67,6 +67,7 @@ public class MatchingEngineUI {
         }
     }
 
+    /*
     private void filterMatches() {
         System.out.println("Filtering matches...");
         System.out.print("Enter location (or press Enter to skip): ");
@@ -83,5 +84,7 @@ public class MatchingEngineUI {
                 System.out.println(match);
             }
         }
-    }
+    }*/
+    
+    
 }

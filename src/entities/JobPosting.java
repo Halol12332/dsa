@@ -95,7 +95,7 @@ public class JobPosting {
     public String toString() {
         return "JobPosting{" +
                 "id='" + id + '\'' +
-                ", company=" + company +
+                ", companye=" + company +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", jobType='" + jobType + '\'' +

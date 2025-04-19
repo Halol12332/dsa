@@ -1,53 +1,54 @@
 package control;
 
+import adt.HashTable;
 import adt.LinkedList;
 import entities.Applicant;
 import entities.JobPosting;
 import entities.Match;
 
 public class MatchingEngineController {
-    private LinkedList<Applicant> applicants;
-    private LinkedList<JobPosting> jobPostings;
+    private HashTable<Applicant> applicants;
+    private HashTable<JobPosting> jobPostings;
     private LinkedList<Match> matches;
-    
-    public MatchingEngineController(){
-        
-    }
 
-    public MatchingEngineController(LinkedList<Applicant> applicants, 
-            LinkedList<JobPosting> jobPostings) {
-        this.applicants = applicants;
-        this.jobPostings = jobPostings;
+    public MatchingEngineController() {
+        this.applicants = new HashTable<>();
+        this.jobPostings = new HashTable<>();
         this.matches = new LinkedList<>();
     }
 
+    public void addApplicant(Applicant applicant) {
+        applicants.insert(applicant);
+    }
+
+    public void addJobPosting(JobPosting jobPosting) {
+        jobPostings.insert(jobPosting);
+    }
+
     public void performMatching(String applicantName) {
+        System.out.println("Searching for applicant: " + applicantName);
+
         // Clear previous matches
         matches.clear();
 
         // Find the applicant by name
-        Applicant targetApplicant = null;
-        for (int i = 0; i < applicants.getNumberOfEntries(); i++) {
-            Applicant applicant = applicants.getEntry(i);
-            if (applicant.getName().equalsIgnoreCase(applicantName)) {
-                targetApplicant = applicant;
-                break;
-            }
-        }
-
+        Applicant targetApplicant = applicants.search(applicantName);
         if (targetApplicant == null) {
             System.out.println("Applicant not found: " + applicantName);
             return;
         }
 
         // Perform matching for the target applicant
-        for (int i = 0; i < jobPostings.getNumberOfEntries(); i++) {
-            JobPosting job = jobPostings.getEntry(i);
+        LinkedList<JobPosting> allJobPostings = jobPostings.getAllEntries();
+        for (int i = 0; i < allJobPostings.getNumberOfEntries(); i++) {
+            JobPosting job = allJobPostings.getEntry(i);
             double matchScore = calculateMatchScore(targetApplicant, job);
             if (matchScore > 0) {
                 matches.add(new Match(targetApplicant, job, matchScore));
             }
         }
+
+        System.out.println("Matching completed. Found " + matches.getNumberOfEntries() + " matches.");
     }
 
     private double calculateMatchScore(Applicant applicant, JobPosting job) {
@@ -82,19 +83,6 @@ public class MatchingEngineController {
         }
 
         return score;
-    }
-
-    public LinkedList<Match> filterMatches(String location, String jobType) {
-        LinkedList<Match> filteredMatches = new LinkedList<>();
-        for (int i = 0; i < matches.getNumberOfEntries(); i++) {
-            Match match = matches.getEntry(i);
-            boolean locationMatch = (location == null || match.getJobPosting().getLocation().equalsIgnoreCase(location));
-            boolean jobTypeMatch = (jobType == null || match.getJobPosting().getJobType().equalsIgnoreCase(jobType));
-            if (locationMatch && jobTypeMatch) {
-                filteredMatches.add(match);
-            }
-        }
-        return filteredMatches;
     }
 
     public LinkedList<Match> getMatches() {
