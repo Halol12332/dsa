@@ -18,6 +18,8 @@ import java.util.Scanner;
 
 public class JavaApplication3 {
     public static void main(String[] args) {
+        
+        
         // Initialize controllers
         //ApplicantManagementController applicantManagementController = new ApplicantManagementController(applicants);
         //JobManagementController jobManagementController = new JobManagementController(jobPostings);
