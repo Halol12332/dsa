@@ -1,4 +1,8 @@
 package adt;
+import java.util.function.Predicate;
+import java.util.Comparator;
+
+
 
 //THIS IS FROM SAMPLE CODE
 
@@ -82,6 +86,9 @@ public interface ListInterface<T> {
    * @return true if the list contains anEntry, or false if not
    */
   public boolean contains(T anEntry);
+  public LinkedList<T> filter(Predicate<T> condition);
+  public void sort(Comparator<T> comparator);
+
 
   /**
    * Task: Gets the number of entries in the list.

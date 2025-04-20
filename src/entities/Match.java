@@ -6,10 +6,10 @@ package entities;
 
 public class Match {
     private Applicant applicant;
-    private JobPosting jobPosting;
+    private JobPostings jobPosting;
     private double matchScore;
 
-    public Match(Applicant applicant, JobPosting jobPosting, double matchScore) {
+    public Match(Applicant applicant, JobPostings jobPosting, double matchScore) {
         this.applicant = applicant;
         this.jobPosting = jobPosting;
         this.matchScore = matchScore;
@@ -19,7 +19,7 @@ public class Match {
         return applicant;
     }
 
-    public JobPosting getJobPosting() {
+    public JobPostings getJobPosting() {
         return jobPosting;
     }
 

@@ -10,7 +10,7 @@ import control.InterviewSchedulingController;
 import control.JobManagementController;
 import control.MatchingEngineController;
 import entities.Applicant;
-import entities.JobPosting;
+import entities.JobPostings;
 import entities.Company;
 import entities.Interview;
 
@@ -19,14 +19,14 @@ import java.util.Scanner;
 public class JavaApplication3 {
     public static void main(String[] args) {
         // Initialize controllers
-        //ApplicantManagementController applicantManagementController = new ApplicantManagementController();
-        //JobManagementController jobManagementController = new JobManagementController();
+        ApplicantManagementController applicantManagementController = new ApplicantManagementController();
+        JobManagementController jobManagementController = new JobManagementController();
         MatchingEngineController matchingEngineController = new MatchingEngineController();
-        //InterviewSchedulingController interviewSchedulingController = new InterviewSchedulingController();
+        InterviewSchedulingController interviewSchedulingController = new InterviewSchedulingController();
 
-        // Initialize UIs
-        //ApplicantManagementUI applicantManagementUI = new ApplicantManagementUI(applicantManagementController);
-        //JobManagementUI jobManagementUI = new JobManagementUI(jobManagementController);
+        //Initialize UIs
+        ApplicantManagementUI applicantManagementUI = new ApplicantManagementUI(applicantManagementController);
+        JobManagementUI jobManagementUI = new JobManagementUI();
         MatchingEngineUI matchingEngineUI = new MatchingEngineUI(matchingEngineController);
         //InterviewSchedulingUI interviewSchedulingUI = new InterviewSchedulingUI(interviewSchedulingController);
 

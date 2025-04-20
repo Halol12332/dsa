@@ -1,8 +1,10 @@
 package adt;
-
+import java.io.Serializable;
+import java.util.Comparator;
+import java.util.function.Predicate;
 import java.util.Iterator;
 
-public class LinkedList<T> implements ListInterface<T>, Iterable<T> {
+public class LinkedList<T> implements ListInterface<T>, Iterable<T>, Serializable {
 
     private Node firstNode; // reference to first node
     private int numberOfEntries;  	// number of entries in list
@@ -125,6 +127,74 @@ public class LinkedList<T> implements ListInterface<T>, Iterable<T> {
         }
         return found;
     }
+    
+    //<------- Filter by criterias ------->
+    public LinkedList<T> filter(Predicate<T> condition){
+        LinkedList<T> filteredList = new LinkedList<>();
+        Node currentNode = firstNode;
+        while(currentNode != null){
+            if(condition.test(currentNode.data)){
+                filteredList.add(currentNode.data);
+            }
+            currentNode = currentNode.next;
+        }
+        return filteredList;   
+    }
+        //<---------- Merge Sort ---------->
+    public void sort(Comparator<T> comparator){
+      if(numberOfEntries > 1){
+         firstNode = mergeSort(firstNode, comparator); 
+      }   
+    }
+    
+    private Node mergeSort(Node firstNode, Comparator<T> comparator){
+        if (firstNode == null || firstNode.next == null){
+              return firstNode;
+        }
+        Node middle = getMiddle(firstNode);
+        Node nextOfMiddle = middle.next;
+        middle.next = null;
+
+        Node left = mergeSort(firstNode, comparator);
+        Node right = mergeSort(nextOfMiddle, comparator);
+
+        return merge(left, right, comparator);
+        }
+
+        private Node getMiddle(Node firstNode){
+            if(firstNode == null){
+                return firstNode;
+            }
+            Node slow = firstNode;
+            Node fast = firstNode.next;
+
+            while(fast != null && fast.next != null){
+                slow = slow.next;
+                fast = fast.next.next;
+            }
+            return slow;
+        }
+
+        private Node merge(Node left, Node right, Comparator<T> comparator){
+            if (left == null){
+                return right;
+            }
+
+            if (right == null){
+                return left;
+            }
+
+            Node result;
+            if(comparator.compare(left.data, right.data) <= 0){
+                result= left;
+                result.next = merge(left.next, right, comparator);
+
+            }else{
+                result = right;
+                result.next = merge(left, right.next, comparator);
+            }   
+            return result;
+        }
 
     @Override
     public int getNumberOfEntries() {

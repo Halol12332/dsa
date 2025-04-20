@@ -10,13 +10,13 @@ package entities;
 public class Interview {
     private String id;
     private Applicant applicant;
-    private JobPosting jobPosting;
+    private JobPostings jobPosting;
     private String dateTime;
     private String location;
 
     // Constructor
     public Interview(String id, Applicant applicant, 
-            JobPosting jobPosting, String dateTime,
+            JobPostings jobPosting, String dateTime,
             String location) {
         this.id = id;
         this.applicant = applicant;
@@ -40,10 +40,10 @@ public class Interview {
         this.applicant = applicant;
     }
 
-    public JobPosting getJobPosting() {
+    public JobPostings getJobPosting() {
         return jobPosting;
     }
-    public void setJobPosting(JobPosting jobPosting) {
+    public void setJobPosting(JobPostings jobPosting) {
         this.jobPosting = jobPosting;
     }
 

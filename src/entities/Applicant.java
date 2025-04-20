@@ -8,36 +8,28 @@ import adt.LinkedList;
  * Represents an applicant in the Internship Application Program.
  */
 public class Applicant {
-    private String id;
     private String name;
     private String email;
     private String phoneNumber;
     private String major;
     private LinkedList<String> skills;
     private String locationPreference;
+    private String desiredJob;
 
     // Constructor
-    public Applicant(String id, String name, String email, 
-            String phoneNumber, String major, 
-            LinkedList<String> skills, String locationPreference) {
-        this.id = id;
+
+    public Applicant(String name, String email, String phoneNumber, String major, LinkedList<String> skills, String locationPreference, String desiredJob) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.major = major;
         this.skills = skills;
         this.locationPreference = locationPreference;
+        this.desiredJob = desiredJob;
     }
+   
 
     // Getters and Setters
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
@@ -85,17 +77,26 @@ public class Applicant {
     public void setLocationPreference(String locationPreference) {
         this.locationPreference = locationPreference;
     }
+
+    public String getDesiredJob() {
+        return desiredJob;
+    }
+
+    public void setDesiredJob(String desiredJob) {
+        this.desiredJob = desiredJob;
+    }
+    
     
     @Override
     public String toString() {
         return "Applicant{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", major='" + major + '\'' +
-                ", skills=" + skills +
-                ", locationPreference='" + locationPreference + '\'' +
+                ", name = '" + name + '\'' +
+                ", email = '" + email + '\'' +
+                ", phoneNumber = '" + phoneNumber + '\'' +
+                ", major = '" + major + '\'' +
+                ", skills = " + skills +
+                ", locationPreference = '" + locationPreference + '\'' +
+                ", desiredJob = '" + desiredJob + '\'' +
                 '}';
     }
 }
