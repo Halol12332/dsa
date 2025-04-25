@@ -36,7 +36,7 @@ public class JobManagementController implements Serializable {
       choice = jobPostsUI.getMenuChoice();
       switch(choice) {
         case 0: //Exit the system
-          exitSystem();
+          //exitSystem();
           break;
         case 1: //View the job postings
           jobPostsUI.listAllJobPosts(getAllJobPosts());
