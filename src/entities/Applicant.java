@@ -3,30 +3,33 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package entities;
-import adt.LinkedList;
+import adt.*;
+import java.io.Serializable;
 /**
  * Represents an applicant in the Internship Application Program.
  */
-public class Applicant {
+public class Applicant implements Serializable {
     private String name;
     private String email;
     private String phoneNumber;
     private String major;
-    private LinkedList<String> skills;
-    private String locationPreference;
+    private ListInterface<String> skills;
+    private ListInterface<String> locationPreference;
     private String desiredJob;
 
     // Constructor
 
-    public Applicant(String name, String email, String phoneNumber, String major, LinkedList<String> skills, String locationPreference, String desiredJob) {
+    public Applicant(String name, String email, String phone, String major,
+                 ListInterface<String> skills, ListInterface<String> preferredLocations, String jobType) {
         this.name = name;
         this.email = email;
-        this.phoneNumber = phoneNumber;
+        this.phoneNumber = phone; // ✅ fix
         this.major = major;
         this.skills = skills;
-        this.locationPreference = locationPreference;
-        this.desiredJob = desiredJob;
+        this.locationPreference = preferredLocations; // ✅ fix
+        this.desiredJob = jobType; // ✅ fix
     }
+
    
 
     // Getters and Setters
@@ -62,7 +65,7 @@ public class Applicant {
         this.major = major;
     }
 
-    public LinkedList<String> getSkills() {
+    public ListInterface<String> getSkills() {
         return skills;
     }
 
@@ -70,11 +73,11 @@ public class Applicant {
         this.skills = skills;
     }
 
-    public String getLocationPreference() {
+    public ListInterface<String> getLocationPreference() {
         return locationPreference;
     }
 
-    public void setLocationPreference(String locationPreference) {
+    public void setLocationPreference(LinkedList<String> locationPreference) {
         this.locationPreference = locationPreference;
     }
 
@@ -84,6 +87,21 @@ public class Applicant {
 
     public void setDesiredJob(String desiredJob) {
         this.desiredJob = desiredJob;
+    }
+    
+    public String getMajorAsString() {
+        return major;
+    }
+
+    public String getLocationPreferenceAsString() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 1; i <= locationPreference.getNumberOfEntries(); i++) {
+            sb.append(locationPreference.getEntry(i));
+            if (i < locationPreference.getNumberOfEntries()) {
+                sb.append(", ");
+            }
+        }
+        return sb.toString();
     }
     
     

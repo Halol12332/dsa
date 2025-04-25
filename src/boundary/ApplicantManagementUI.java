@@ -9,8 +9,9 @@ package boundary;
  * @author natalie
  */
 
+import adt.LinkedList;
 import control.ApplicantManagementController;
-import entities.JobSeeker;
+import entities.Applicant;
 import java.util.Scanner;
 
 public class ApplicantManagementUI {
@@ -42,19 +43,19 @@ public class ApplicantManagementUI {
 
             switch (option) {
                 case 1:
-                    addJobSeeker();
+                    addApplicant();
                     break;
                 case 2:
-                    removeJobSeeker();
+                    removeApplicant();
                     break;
                 case 3:
-                    updateJobSeeker();
+                    updateApplicant();
                     break;
                 case 4:
-                    displayAllJobSeekers();
+                    displayAllApplicants();
                     break;
                 case 5:
-                    filterJobSeekers();
+                    filterApplicants();
                     break;
                 case 6:
                     System.out.println("Exited.");
@@ -63,38 +64,38 @@ public class ApplicantManagementUI {
                     System.out.println("Invalid choice. Please try again.");
             }
         } while (option != 6);
-        scanner.close();
     }
 
-    private void addJobSeeker() {
-        System.out.println("\nPlease enter details of the new job seeker.");
-        JobSeeker newJS = inputJobSeeker();
-        controller.addJobSeeker(newJS);
-        System.out.println("Job seeker added successfully.");
+    private void addApplicant() {
+        System.out.println("\nPlease enter details of the new applicant.");
+        Applicant newApplicant = inputApplicant();
+        controller.addApplicant(newApplicant);
+        System.out.println("Applicant added successfully.");
     }
 
-    private void removeJobSeeker() {
-        System.out.print("Please enter the email of the job seeker to remove: ");
+    private void removeApplicant() {
+        System.out.print("Please enter the email of the applicant to remove: ");
         String email = scanner.nextLine();
-        boolean removed = controller.removeJobSeeker(email);
+        boolean removed = controller.removeApplicant(email);
         if (removed) {
-            System.out.println("The job seeker has been removed successfully.");
+            System.out.println("The applicant has been removed successfully.");
         } else {
-            System.out.println("No job seeker found with email " + email);
+            System.out.println("No applicant found with email " + email);
         }
     }
 
-    private void updateJobSeeker() {
-        System.out.print("\nPlease enter the email of the job seeker to update: ");
+    private void updateApplicant() {
+        System.out.print("\nPlease enter the email of the applicant to update: ");
         String email = scanner.nextLine();
 
         System.out.println("\nWhat would you like to update?");
         System.out.println("1. Name");
         System.out.println("2. Email");
         System.out.println("3. Phone Number");
-        System.out.println("4. Location");
-        System.out.println("5. Desired Job");
-        System.out.println("6. Skills");
+        System.out.println("4. Major");
+        System.out.println("5. Skills");
+        System.out.println("6. Location Preference");
+        System.out.println("7. Desired Job");
         System.out.print("Enter your choice: ");
         int updateOption = scanner.nextInt();
         scanner.nextLine();
@@ -102,22 +103,24 @@ public class ApplicantManagementUI {
         System.out.print("Enter new value: ");
         String newValue = scanner.nextLine();
 
-        JobSeeker updatedJS = controller.updateJobSeeker(email, updateOption, newValue);
-        if (updatedJS != null) {
-            System.out.println("Information of Job Seeker updated successfully");
+        Applicant updatedApplicant = controller.updateApplicant(email, updateOption, newValue);
+        if (updatedApplicant != null) {
+            System.out.println("Information of the applicant has been updated successfully.");
         } else {
             System.out.println("Update failed.");
         }
     }
 
-    private void displayAllJobSeekers() {
-        controller.displayAllJobSeekers();
+    private void displayAllApplicants() {
+        controller.displayAllApplicants();
     }
 
-    private void filterJobSeekers() {
+    private void filterApplicants() {
         System.out.println("\nFilter options:");
-        System.out.println("1. By Location");
+        System.out.println("1. By Location Preference");
         System.out.println("2. By Desired Job");
+        System.out.println("3. By Applicant's Major");
+        
         System.out.print("Please choose the filter option: ");
         int filterOption = scanner.nextInt();
         scanner.nextLine();
@@ -133,12 +136,17 @@ public class ApplicantManagementUI {
                 String desiredJob = scanner.nextLine();
                 controller.filterByDesiredJob(desiredJob);
                 break;
+            case 3:
+                System.out.print("Enter major: ");
+                String major = scanner.nextLine();
+                controller.filterByMajor(major);
+                break;
             default:
                 System.out.println("Invalid filter.");
         }
     }
 
-    private JobSeeker inputJobSeeker() {
+    private Applicant inputApplicant() {
         System.out.print("Name: ");
         String name = scanner.nextLine();
 
@@ -159,17 +167,38 @@ public class ApplicantManagementUI {
                 System.out.println("Invalid phone number. Must be 10 or 11 digits.");
             }
         } while (!isValidPhone(phone));
-
-        System.out.print("Location: ");
-        String location = scanner.nextLine();
+        
+        System.out.print("Major: ");
+        String major = scanner.nextLine();
+        
+        LinkedList<String> skills = new LinkedList<>();
+        System.out.print("Skills (Please use comma as separator): ");
+        String input = scanner.nextLine().trim();
+        if (!input.isEmpty()) {
+            String[] skillsArray = input.split("\\s*,\\s*");
+            for (String skill : skillsArray) {
+                if(!skill.trim().isEmpty()){
+                skills.add(skill.trim());
+                }
+            }
+        }
+        
+        LinkedList<String> locationPreferences = new LinkedList<>();
+        System.out.print("Location preferences (Please use comma as separator): ");
+        String locInput = scanner.nextLine().trim();
+        if (!locInput.isEmpty()) {
+            String[] locations = locInput.split("\\s*,\\s*");
+            for (String location : locations) {
+                if (!location.trim().isEmpty()) {
+                    locationPreferences.add(location.trim());
+                }
+            }
+        }
 
         System.out.print("Desired Job Type: ");
         String desiredJob = scanner.nextLine();
 
-        System.out.print("Skills: ");
-        String skills = scanner.nextLine();
-
-        return new JobSeeker(name, email, phone, location, desiredJob, skills);
+        return new Applicant(name, email, phone, major, skills ,locationPreferences,desiredJob);
     }
 
     private boolean isValidEmail(String email) {

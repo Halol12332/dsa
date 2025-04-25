@@ -1,46 +1,27 @@
 package dao;
 
-import adt.*;
+import adt.LinkedList;
+import adt.ListInterface;
 import entities.Applicant;
-import utility.MessageUI;
-
 import java.io.*;
 
 public class ApplicantDAO {
     private static final String FILE_NAME = "applicants.dat";
-    private static final String REPORT_FILE_NAME = "applicants_reports_";
-    //private static final DateTimeFormatter REPORT_DATE_FORMAT = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
-    private ListInterface<Applicant> applicantLists = new LinkedList<>();
+
+    public void saveToFile(ListInterface<Applicant> applicants) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_NAME))) {
+            oos.writeObject(applicants);
+        } catch (IOException e) {
+            System.err.println("Error saving applicants: " + e.getMessage());
+        }
+    }
 
     public ListInterface<Applicant> retrieveFromFile() {
-        ListInterface<Applicant> applicantList = new LinkedList<>();
-
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_NAME))) {
-            applicantList = (ListInterface<Applicant>) ois.readObject();
-            MessageUI.displayValidRetrieveMessage();
-        } catch (FileNotFoundException e) {
-            MessageUI.displayFileNotFoundMessage();
+            return (ListInterface<Applicant>) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            MessageUI.displayInvalidFileMessage();
+            System.err.println("Error retrieving applicants: " + e.getMessage());
         }
-        return applicantList;
-    }
-
-    public void saveToFile(ListInterface<Applicant> applicantList) {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_NAME))) {
-            oos.writeObject(applicantList);
-            MessageUI.displayValidSaveMessage();
-        } catch (IOException e) {
-            MessageUI.displayInvalidSaveMessage();
-        }
-    }
-
-    public void exportReportToTextFile(String fileName, String reportContent) {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(fileName))) {
-            writer.println(reportContent);
-            System.out.println("Report successfully exported to: " + fileName);
-        } catch (IOException e) {
-            System.out.println("Failed to export report: " + e.getMessage());
-        }
+        return new LinkedList<>();
     }
 }

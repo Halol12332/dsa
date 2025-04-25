@@ -1,6 +1,5 @@
 package javaapplication3;
 
-import adt.LinkedList;
 import boundary.ApplicantManagementUI;
 import boundary.InterviewSchedulingUI;
 import boundary.JobManagementUI;
@@ -9,62 +8,79 @@ import control.ApplicantManagementController;
 import control.InterviewSchedulingController;
 import control.JobManagementController;
 import control.MatchingEngineController;
-import entities.Applicant;
-import entities.JobPostings;
-import entities.Company;
-import entities.Interview;
-
+import control.SearchController;
+import dao.ApplicantInitializer;
+import dao.JobPostingInitializer;
 import java.util.Scanner;
 
 public class JavaApplication3 {
     public static void main(String[] args) {
         // Initialize controllers
-        ApplicantManagementController applicantManagementController = new ApplicantManagementController();
-        JobManagementController jobManagementController = new JobManagementController();
-        MatchingEngineController matchingEngineController = new MatchingEngineController();
-        InterviewSchedulingController interviewSchedulingController = new InterviewSchedulingController();
+        ApplicantManagementController applicantController = new ApplicantManagementController();
+        JobManagementController jobController = new JobManagementController();
+        MatchingEngineController matchingController = new MatchingEngineController();
+        InterviewSchedulingController interviewController = new InterviewSchedulingController();
 
-        //Initialize UIs
-        ApplicantManagementUI applicantManagementUI = new ApplicantManagementUI(applicantManagementController);
-        JobManagementUI jobManagementUI = new JobManagementUI();
-        MatchingEngineUI matchingEngineUI = new MatchingEngineUI(matchingEngineController);
-        //InterviewSchedulingUI interviewSchedulingUI = new InterviewSchedulingUI(interviewSchedulingController);
+        // Initialize data
+        ApplicantInitializer applicantInitializer = new ApplicantInitializer();
+        JobPostingInitializer jobPostingInitializer = new JobPostingInitializer();
 
-        
+        // Load initial data
+        applicantInitializer.initializeApplicants();
+        jobPostingInitializer.initializeJobPosts();
+
+        // Initialize SearchController with applicants
+        SearchController searchController = new SearchController(
+            jobPostingInitializer.getJobPostingDao().retrieveFromFile(),
+            applicantInitializer.getApplicantDAO().retrieveFromFile()
+        );
+
+        // Create UI instances
+        ApplicantManagementUI applicantUI = new ApplicantManagementUI(applicantController);
+        JobManagementUI jobUI = new JobManagementUI();
+        MatchingEngineUI matchingUI = new MatchingEngineUI(matchingController, searchController);
+        InterviewSchedulingUI interviewUI = new InterviewSchedulingUI(interviewController);
+
         // Main menu
         Scanner scanner = new Scanner(System.in);
-        boolean done = false;
-        while (!done) {
+        int choice;
+
+        do {
             System.out.println("\nMain Menu:");
             System.out.println("1. Applicant Management");
             System.out.println("2. Job Management");
             System.out.println("3. Matching Engine");
             System.out.println("4. Interview Scheduling");
-            System.out.println("5. Exit");
+            System.out.println("0. Exit");
             System.out.print("Enter your choice: ");
-            int choice = scanner.nextInt();
+
+            while (!scanner.hasNextInt()) {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.next(); // Consume the invalid input
+            }
+            choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
 
             switch (choice) {
                 case 1:
-                    //applicantManagementUI.displayMenu();
+                    applicantUI.start();
                     break;
                 case 2:
-                    //jobManagementUI.displayMenu();
+                    jobController.runJobPostingsMaintenance();
                     break;
                 case 3:
-                    matchingEngineUI.displayMenu();
+                    matchingUI.displayMenu();
                     break;
                 case 4:
-                    //interviewSchedulingUI.displayMenu();
+                    interviewUI.start();
                     break;
-                case 5:
-                    done = true;
-                    System.out.println("Exiting the application...");
+                case 0:
+                    System.out.println("Exiting the system.");
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
-        }
+        } while (choice != 0);
+        scanner.close();
     }
 }

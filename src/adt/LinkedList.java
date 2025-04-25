@@ -1,13 +1,13 @@
 package adt;
+
 import java.io.Serializable;
 import java.util.Comparator;
-import java.util.function.Predicate;
 import java.util.Iterator;
+import java.util.function.Predicate;
 
 public class LinkedList<T> implements ListInterface<T>, Iterable<T>, Serializable {
-
     private Node firstNode; // reference to first node
-    private int numberOfEntries;  	// number of entries in list
+    private int numberOfEntries;   // number of entries in list
 
     public LinkedList() {
         clear();
@@ -21,12 +21,12 @@ public class LinkedList<T> implements ListInterface<T>, Iterable<T>, Serializabl
 
     @Override
     public boolean add(T newEntry) {
-        Node newNode = new Node(newEntry);	// create the new node
+        Node newNode = new Node(newEntry); // create the new node
 
         if (isEmpty()) {
             firstNode = newNode;
-        } else {                        // add to end of nonempty list
-            Node currentNode = firstNode;	// traverse linked list with p pointing to the current node
+        } else { // add to end of nonempty list
+            Node currentNode = firstNode; // traverse linked list with p pointing to the current node
             while (currentNode.next != null) { // while have not reached the last node
                 currentNode = currentNode.next;
             }
@@ -47,14 +47,14 @@ public class LinkedList<T> implements ListInterface<T>, Iterable<T>, Serializabl
             if (isEmpty() || (newPosition == 1)) { // case 1: add to beginning of list
                 newNode.next = firstNode;
                 firstNode = newNode;
-            } else {								// case 2: list is not empty and newPosition > 1
+            } else { // case 2: list is not empty and newPosition > 1
                 Node nodeBefore = firstNode;
                 for (int i = 1; i < newPosition - 1; ++i) {
-                    nodeBefore = nodeBefore.next;		// advance nodeBefore to its next node
+                    nodeBefore = nodeBefore.next; // advance nodeBefore to its next node
                 }
 
-                newNode.next = nodeBefore.next;	// make new node point to current node at newPosition
-                nodeBefore.next = newNode;		// make the node before point to the new node
+                newNode.next = nodeBefore.next; // make new node point to current node at newPosition
+                nodeBefore.next = newNode; // make the node before point to the new node
             }
             numberOfEntries++;
         } else {
@@ -90,9 +90,9 @@ public class LinkedList<T> implements ListInterface<T>, Iterable<T>, Serializabl
         if ((givenPosition >= 1) && (givenPosition <= numberOfEntries)) {
             Node currentNode = firstNode;
             for (int i = 0; i < givenPosition - 1; ++i) {
-                currentNode = currentNode.next;		// advance currentNode to next node
+                currentNode = currentNode.next; // advance currentNode to next node
             }
-            currentNode.data = newEntry;	// currentNode is pointing to the node at givenPosition
+            currentNode.data = newEntry; // currentNode is pointing to the node at givenPosition
         } else {
             isSuccessful = false;
         }
@@ -106,9 +106,9 @@ public class LinkedList<T> implements ListInterface<T>, Iterable<T>, Serializabl
         if ((givenPosition >= 1) && (givenPosition <= numberOfEntries)) {
             Node currentNode = firstNode;
             for (int i = 0; i < givenPosition - 1; ++i) {
-                currentNode = currentNode.next;		// advance currentNode to next node
+                currentNode = currentNode.next; // advance currentNode to next node
             }
-            result = currentNode.data;	// currentNode is pointing to the node at givenPosition
+            result = currentNode.data; // currentNode is pointing to the node at givenPosition
         }
         return result;
     }
@@ -127,29 +127,30 @@ public class LinkedList<T> implements ListInterface<T>, Iterable<T>, Serializabl
         }
         return found;
     }
-    
-    //<------- Filter by criterias ------->
-    public LinkedList<T> filter(Predicate<T> condition){
+
+    @Override
+    public LinkedList<T> filter(Predicate<T> condition) {
         LinkedList<T> filteredList = new LinkedList<>();
         Node currentNode = firstNode;
-        while(currentNode != null){
-            if(condition.test(currentNode.data)){
+        while (currentNode != null) {
+            if (condition.test(currentNode.data)) {
                 filteredList.add(currentNode.data);
             }
             currentNode = currentNode.next;
         }
-        return filteredList;   
+        return filteredList;
     }
-        //<---------- Merge Sort ---------->
-    public void sort(Comparator<T> comparator){
-      if(numberOfEntries > 1){
-         firstNode = mergeSort(firstNode, comparator); 
-      }   
+
+    @Override
+    public void sort(Comparator<T> comparator) {
+        if (numberOfEntries > 1) {
+            firstNode = mergeSort(firstNode, comparator);
+        }
     }
-    
-    private Node mergeSort(Node firstNode, Comparator<T> comparator){
-        if (firstNode == null || firstNode.next == null){
-              return firstNode;
+
+    private Node mergeSort(Node firstNode, Comparator<T> comparator) {
+        if (firstNode == null || firstNode.next == null) {
+            return firstNode;
         }
         Node middle = getMiddle(firstNode);
         Node nextOfMiddle = middle.next;
@@ -159,42 +160,41 @@ public class LinkedList<T> implements ListInterface<T>, Iterable<T>, Serializabl
         Node right = mergeSort(nextOfMiddle, comparator);
 
         return merge(left, right, comparator);
+    }
+
+    private Node getMiddle(Node firstNode) {
+        if (firstNode == null) {
+            return firstNode;
+        }
+        Node slow = firstNode;
+        Node fast = firstNode.next;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
+
+    private Node merge(Node left, Node right, Comparator<T> comparator) {
+        if (left == null) {
+            return right;
         }
 
-        private Node getMiddle(Node firstNode){
-            if(firstNode == null){
-                return firstNode;
-            }
-            Node slow = firstNode;
-            Node fast = firstNode.next;
-
-            while(fast != null && fast.next != null){
-                slow = slow.next;
-                fast = fast.next.next;
-            }
-            return slow;
+        if (right == null) {
+            return left;
         }
 
-        private Node merge(Node left, Node right, Comparator<T> comparator){
-            if (left == null){
-                return right;
-            }
-
-            if (right == null){
-                return left;
-            }
-
-            Node result;
-            if(comparator.compare(left.data, right.data) <= 0){
-                result= left;
-                result.next = merge(left.next, right, comparator);
-
-            }else{
-                result = right;
-                result.next = merge(left, right.next, comparator);
-            }   
-            return result;
+        Node result;
+        if (comparator.compare(left.data, right.data) <= 0) {
+            result = left;
+            result.next = merge(left.next, right, comparator);
+        } else {
+            result = right;
+            result.next = merge(left, right.next, comparator);
         }
+        return result;
+    }
 
     @Override
     public int getNumberOfEntries() {
@@ -203,9 +203,7 @@ public class LinkedList<T> implements ListInterface<T>, Iterable<T>, Serializabl
 
     @Override
     public boolean isEmpty() {
-        boolean result;
-        result = numberOfEntries == 0;
-        return result;
+        return numberOfEntries == 0;
     }
 
     @Override
@@ -252,7 +250,7 @@ public class LinkedList<T> implements ListInterface<T>, Iterable<T>, Serializabl
         }
     }
 
-    private class Node {
+    private class Node implements Serializable {
         private T data;
         private Node next;
 

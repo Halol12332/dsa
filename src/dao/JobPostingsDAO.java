@@ -46,11 +46,11 @@ public class JobPostingsDAO{
     }
     
     public void exportReportToTextFile(String fileName, String reportContent) {
-    try (PrintWriter writer = new PrintWriter(new FileWriter(fileName))) {
-        writer.println(reportContent);
-        System.out.println("Report successfully exported to: " + fileName);
-    } catch (IOException e) {
-        System.out.println("Failed to export report: " + e.getMessage());
+        try (PrintWriter writer = new PrintWriter(new FileWriter(fileName))) {
+            writer.println(reportContent);
+            System.out.println("Report successfully exported to: " + fileName);
+        } catch (IOException e) {
+            System.out.println("Failed to export report: " + e.getMessage());
+        }
     }
-}
 }

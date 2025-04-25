@@ -1,27 +1,35 @@
 package boundary;
 
+/**
+ * Author : Jaya Hakim Prajna
+ */
+
 import control.MatchingEngineController;
-import entities.Match;
-import adt.LinkedList;
+import control.SearchController;
+import entities.Applicant;
+import entities.JobPostings;
+import adt.*;
 
 import java.util.Scanner;
 
 public class MatchingEngineUI {
     private MatchingEngineController matchingEngineController;
     private Scanner scanner;
+    private SearchController searchController;
 
-    public MatchingEngineUI(MatchingEngineController matchingEngineController) {
+    public MatchingEngineUI(MatchingEngineController matchingEngineController, SearchController searchController) {
         this.matchingEngineController = matchingEngineController;
+        this.searchController = searchController;
         this.scanner = new Scanner(System.in);
     }
 
     public void displayMenu() {
         boolean done = false;
         while (!done) {
-            System.out.println("\nMatching Engine Menu:");
-            System.out.println("1. Perform Matching");
-            System.out.println("2. View All Matches");
-            System.out.println("3. Filter Matches");
+            System.out.println("---------------------------------------------\nMatching Engine Menu:");
+            System.out.println("1. Perform Matching as Applicant");
+            System.out.println("2. Perform Matching as Job Posting");
+            System.out.println("3. View All Matches");
             System.out.println("4. Back to Main Menu");
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
@@ -29,13 +37,13 @@ public class MatchingEngineUI {
 
             switch (choice) {
                 case 1:
-                    performMatching();
+                    performMatchingAsApplicant();
                     break;
                 case 2:
-                    viewAllMatches();
+                    performMatchingAsJobPosting();
                     break;
                 case 3:
-                    //filterMatches();
+                    matchingEngineController.viewAllMatches();
                     break;
                 case 4:
                     done = true;
@@ -47,44 +55,57 @@ public class MatchingEngineUI {
         }
     }
 
-    private void performMatching() {
-        System.out.print("Enter Applicant Name: ");
-        String applicantName = scanner.nextLine();
-        System.out.println("Performing matching of applicants with job postings...");
-        matchingEngineController.performMatching(applicantName);
-        System.out.println("Matching completed.");
-    }
+    private void performMatchingAsApplicant() {
+        System.out.print("Enter applicant keyword: ");
+        String keyword = scanner.nextLine();
 
-    private void viewAllMatches() {
-        LinkedList<Match> matches = matchingEngineController.getMatches();
-        if (matches.isEmpty()) {
-            System.out.println("No matches found.");
+        ListInterface<String> results = matchingEngineController.getApplicantSearchResults(keyword, searchController);
+        if (results.isEmpty()) {
+            System.out.println("No applicants found.");
+            return;
+        }
+
+        System.out.println("Applicants found:");
+        for (int i = 1; i <= results.getNumberOfEntries(); i++) {
+            System.out.println(results.getEntry(i));
+        }
+
+        System.out.print("Select applicant by number: ");
+        int choice = scanner.nextInt();
+        scanner.nextLine(); // consume newline
+
+        Applicant selected = matchingEngineController.getApplicantBySearchIndex(keyword, choice, searchController);
+        if (selected != null) {
+            matchingEngineController.performMatchingAsApplicant(selected.getName());
         } else {
-            System.out.println("Matches found:");
-            for (Match match : matches) {
-                System.out.println(match);
-            }
+            System.out.println("Invalid selection.");
         }
     }
 
-    /*
-    private void filterMatches() {
-        System.out.println("Filtering matches...");
-        System.out.print("Enter location (or press Enter to skip): ");
-        String location = scanner.nextLine();
-        System.out.print("Enter job type (or press Enter to skip): ");
-        String jobType = scanner.nextLine();
+    private void performMatchingAsJobPosting() {
+        System.out.print("Enter job keyword: ");
+        String keyword = scanner.nextLine();
 
-        LinkedList<Match> filteredMatches = matchingEngineController.filterMatches(location, jobType);
-        if (filteredMatches.isEmpty()) {
-            System.out.println("No matches found.");
-        } else {
-            System.out.println("Filtered Matches found:");
-            for (Match match : filteredMatches) {
-                System.out.println(match);
-            }
+        LinkedList<String> results = matchingEngineController.getJobSearchResults(keyword, searchController);
+        if (results.isEmpty()) {
+            System.out.println("No job postings found.");
+            return;
         }
-    }*/
-    
-    
+
+        System.out.println("Job postings found:");
+        for (int i = 1; i <= results.getNumberOfEntries(); i++) {
+            System.out.println(results.getEntry(i));
+        }
+
+        System.out.print("Select job by number: ");
+        int choice = scanner.nextInt();
+        scanner.nextLine(); // consume newline
+
+        JobPostings selected = matchingEngineController.getJobPostingBySearchIndex(keyword, choice, searchController);
+        if (selected != null) {
+            matchingEngineController.performMatchingAsJobPosting(selected.getJobID());
+        } else {
+            System.out.println("Invalid selection.");
+        }
+    }
 }
